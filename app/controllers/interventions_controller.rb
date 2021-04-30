@@ -1,4 +1,4 @@
-require 'zendesk_api'
+# require 'zendesk_api'
 class InterventionsController < ApplicationController
   before_action :set_intervention, only: %i[ show edit update destroy ]
   # before_action :is_employee #check if current user is employee
@@ -58,35 +58,35 @@ class InterventionsController < ApplicationController
     end
   end
 
-  def create_zendesk
+  # def create_zendesk
  
-    # @employee_name = Employee.find_by(current_user.id)
-    # @customer_name = Customer.find_by(customer_id)
-    # @field_employee = Employee.find_by(employee_id)
+  #   # @employee_name = Employee.find_by(current_user.id)
+  #   # @customer_name = Customer.find_by(customer_id)
+  #   # @field_employee = Employee.find_by(employee_id)
 
-    client = ZendeskAPI::Client.new do |config|
-        config.url = ENV['ZENDESK_URL']
-        config.username = ENV["ZENDESK_EMAIL"]
-        config.token = ENV["ZENDESK_TOKEN"]
-    end
-    ZendeskAPI::Ticket.create!(client,
-    :subject => "Intervention from Employee ##{@intervention.author_id}",
-    :comment => {
-        :value => "Needs Intervention in the building ##{@intervention.building_id} for the customer: #{@intervention.customer_id}.
+  #   client = ZendeskAPI::Client.new do |config|
+  #       config.url = ENV['ZENDESK_URL']
+  #       config.username = ENV["ZENDESK_EMAIL"]
+  #       config.token = ENV["ZENDESK_TOKEN"]
+  #   end
+  #   ZendeskAPI::Ticket.create!(client,
+  #   :subject => "Intervention from Employee ##{@intervention.author_id}",
+  #   :comment => {
+  #       :value => "Needs Intervention in the building ##{@intervention.building_id} for the customer: #{@intervention.customer_id}.
         
-        Battery ID : #{@batt}
-        Column ID : #{@col} 
-        Elevator ID : #{@elev}
+  #       Battery ID : #{@batt}
+  #       Column ID : #{@col} 
+  #       Elevator ID : #{@elev}
 
-        The employee assign is : #{@intervention.employee_id}.
+  #       The employee assign is : #{@intervention.employee_id}.
         
-        Brief description of the intervention: #{@intervention.report}."
-    },
+  #       Brief description of the intervention: #{@intervention.report}."
+  #   },
 
-    :priority => "urgent",
-    :type => "problem"
-    )
-  end
+  #   :priority => "urgent",
+  #   :type => "problem"
+  #   )
+  # end
 
   # POST /interventions or /interventions.json
   def create
@@ -116,7 +116,7 @@ class InterventionsController < ApplicationController
  
 
     if @intervention.save
-      create_zendesk()
+      # create_zendesk()
 
       redirect_to interventions_path, notice: "Message sent!"
     # else    
